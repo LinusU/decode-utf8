@@ -61,8 +61,18 @@ describe('encode-utf8', () => {
         const actual = decodeUtf8(new Uint8Array(testCase.bytes))
         const expected = Buffer.from(testCase.bytes).toString()
 
-        assert.deepStrictEqual(actual, expected)
+        assert.strictEqual(actual, expected)
       })
     }
+  })
+
+  describe('ArrayBuffer input', () => {
+    it('should accept an ArrayBuffer as input', () => {
+      const expected = 'Hello, World!'
+      const input = Uint8Array.from(Buffer.from(expected)).buffer
+      const actual = decodeUtf8(input)
+
+      assert.strictEqual(actual, expected)
+    })
   })
 })
